@@ -1,0 +1,7 @@
+.review-section {
+  flex: 1;
+  padding: 1.5rem;
+  box-shadow: var(--shadow, 0 0 10px rgba(0,0,0,0.1));
+  min-height: 300px;
+}
+

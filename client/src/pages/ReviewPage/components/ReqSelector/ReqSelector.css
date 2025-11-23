@@ -1,0 +1,25 @@
+.req-selector {
+  flex: 0.4;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  box-shadow: var(--shadow, 0 0 10px rgba(0,0,0,0.1));
+}
+
+.req-selector input {
+  margin-bottom: 1rem;
+}
+
+.send-btn {
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.requirements {
+  margin-top: 1rem;
+}
+
+.requirements ul {
+  margin-left: 1rem;
+}

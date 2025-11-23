@@ -17,7 +17,6 @@ app.use(
 app.use(express.json());
 
 app.use("/review", reviewRoute);
-// app.use("/me", userRoute);
 console.log(CORS_ORIGIN);
 
 export default app;

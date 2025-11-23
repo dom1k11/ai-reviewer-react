@@ -1,68 +1,60 @@
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  /* 🎨 Basic colors */
+  --color-main: #ffffff;
+  --color-bg: #e6ebe7;
+  --color-text: #1e1e1e;
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
+  /* 🎯 Accents */
+  --color-primary: #42b983;
+  --color-primary-hover: #429b40;
+  --color-accent: #ff4081;
+  --color-error: #d32f2f;
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
+  /* ⚙️ Secondary*/
+  --color-secondary: #6c757d;
+  --color-success: #4caf50;
+  --color-warning: #ff9800;
+  --color-info: #2196f3;
+  --color-surface: #f9f9f9;
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  /* 🖼️ UI */
+  --color-border: #dddddd;
+  --overlay-bg: rgba(0, 0, 0, 0.5);
+
+  /* ✨ Effects */
+  --button-raiseY: translateY(-2px);
+  --button-hover-shadow: 0 4px 8px var(--shadow-color);
+  --shadow: 0 8px 24px var(--shadow-color), 0 1.5px 6px var(--shadow-light);
+  --shadow-color: rgba(0, 0, 0, 0.18);
+  --shadow-light: rgba(0, 0, 0, 0.12);
+
+  /* 🅰️ Fonts */
+  --font-body: "Inter", sans-serif;
+  --font-heading: "Inter", serif;
+  --font-button: "Inter", sans-serif;
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--color-primary);
+  color: var(--color-main);
+  border: 0;
+  border-radius: 0.5rem;
+  padding: 0.6rem 1.2rem;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+  box-shadow: var(--shadow);
+  font-family: var(--font-button);
+  font-weight: 700;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+button:hover {
+  background-color: var(--color-primary-hover);
+  transform: var(--button-raiseY);
+  box-shadow: var(--button-hover-shadow);
 }

@@ -1,0 +1,12 @@
+.review-block {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .review-block {
+    flex-direction: column;
+  }
+}
