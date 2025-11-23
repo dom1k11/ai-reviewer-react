@@ -3,7 +3,16 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "tsx watch src/index.ts",
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "create-migration": "node src/db/create-migration.js",
+    "migrate": "node dist/db/migrations/migrate.js",
+    "create-seed": "node src/db/create-seed.js",
+    "seed": "npx ts-node src/db/seeds/seed.ts",
+    "check-types": "tsc --noEmit",
+    "build": "tsc && tsc-alias && cpx \"src/config/systemPrompt.md\" dist/config",
+    "start": "node dist/index.js"
   },
   "keywords": [],
   "author": "",
@@ -23,7 +32,7 @@
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
-    "@types/node": "^24.2.0",
+    "@types/node": "^24.10.0",
     "@types/pg": "^8.15.5",
     "@types/supertest": "^6.0.3",
     "@vitest/coverage-v8": "^3.2.4",
@@ -32,7 +41,7 @@
     "tsc-alias": "^1.8.16",
     "tsconfig-paths": "^4.2.0",
     "tsx": "^4.20.3",
-    "typescript": "^5.9.2",
+    "typescript": "^5.9.3",
     "vitest": "^3.2.4"
   }
 }
