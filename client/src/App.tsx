@@ -3,12 +3,16 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ReviewPage from "./pages/ReviewPage/ReviewPage";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import StatsPage from "./pages/StatsPage/StatsPage";
+import LoginPage from "./pages/LoginPage/LoginPage";
+import RegisterPage from "./pages/RegisterPage/RegisterPage";
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/app" element={<ReviewPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
         <Route path="/stats" element={<StatsPage />} />
       </Routes>
     </BrowserRouter>
