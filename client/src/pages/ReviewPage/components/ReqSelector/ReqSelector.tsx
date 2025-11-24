@@ -1,32 +1,5 @@
-import { useState } from "react";
-import "./ReqSelector.css";
-
-export default function ReqSelector() {
-  const [repoUrl, setRepoUrl] = useState(
-    "https://github.com/dom1k11/code-template"
-  );
-
-  function handleSend() {
-    console.log("Send request:", repoUrl);
-    // TODO: Send to API
-  }
-
-  return (
-    <div className="req-selector">
-      <h2>Get your code review</h2>
-
-      <label htmlFor="repo-input">Your repository:</label>
-      <input
-        id="repo-input"
-        className="form-control"
-        type="text"
-        value={repoUrl}
-        onChange={(e) => setRepoUrl(e.target.value)}
-      />
-
-     
-
-      <div className="requirements">
+const ReqSelector = () => {
+    return ( <><div className="requirements">
         <h4>Review Presets</h4>
         <select className="form-select preset-select mb-3">
           <option value="">Select preset...</option>
@@ -117,10 +90,7 @@ export default function ReqSelector() {
             </label>
           </div>
         </div>
-      </div>
-       <button className="btn btn-primary send-btn" onClick={handleSend}>
-        Get review
-      </button>
-    </div>
-  );
+      </div></> );
 }
+ 
+export default ReqSelector;
