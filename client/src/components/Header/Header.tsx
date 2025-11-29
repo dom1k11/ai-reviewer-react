@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
+import { isLoggedIn, logout } from "../../helpers/auth";
 
 export default function Header() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const loggedIn = isLoggedIn();
 
   return (
     <header className="header">
@@ -19,9 +21,21 @@ export default function Header() {
         </Link>
       </div>
       <div className="right-side">
-        <Link to="/login">
-          <button className="btn btn-primary">Log in</button>
-        </Link>
+        {loggedIn ? (
+          <button
+            className="btn btn-danger"
+            onClick={() => {
+              logout();
+              window.location.href = "/login";
+            }}
+          >
+            Log out
+          </button>
+        ) : (
+          <Link to="/login">
+            <button className="btn btn-primary">Log in</button>
+          </Link>
+        )}
       </div>
 
       {/* Mobile menu */}
@@ -42,9 +56,22 @@ export default function Header() {
             <Link to="/stats">
               <button className="btn btn-secondary my-1">Stats</button>
             </Link>
-            <Link to="/login">
-              <button className="btn btn-primary my-1">Log in</button>
-            </Link>
+
+            {loggedIn ? (
+              <button
+                className="btn btn-danger my-1"
+                onClick={() => {
+                  logout();
+                  window.location.href = "/login";
+                }}
+              >
+                Log out
+              </button>
+            ) : (
+              <Link to="/login">
+                <button className="btn btn-primary my-1">Log in</button>
+              </Link>
+            )}
           </div>
         )}
       </div>
