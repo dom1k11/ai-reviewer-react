@@ -6,7 +6,7 @@ import {
   handleGetReviewById,
   // handleGetUserReviews,
   reviewCode,
-} from "../controllers/controllers/reviewController";
+} from "../controllers/reviewController";
 
 const router = Router();
 

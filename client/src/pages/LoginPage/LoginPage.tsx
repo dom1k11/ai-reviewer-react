@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginForm from "../../components/LoginForm/LoginForm";
-// import { login } from "../../api/login";
+import { login } from "../../api/login";
 import { validateForm } from "../../utils/validation/validateForm";
 import { loginSchema } from "../../utils/validation/authSchemas";
 
@@ -28,7 +28,7 @@ const LoginPage = () => {
     }
     setLoading(true);
     try {
-      // await login(data.email, data.password);
+      await login(data.email, data.password);
       navigate("/app");
     } catch (err:any) {
       setError(err.message || "Login failed");

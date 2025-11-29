@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import { CORS_ORIGIN, CORS_METHODS, CORS_HEADERS } from "./cors_config";
 import reviewRoute from "./routes/review";
+import authRoute from "./routes/authentication";
+
 
 
 const app = express();
@@ -17,6 +19,8 @@ app.use(
 app.use(express.json());
 
 app.use("/review", reviewRoute);
+app.use("/auth", authRoute);
+
 console.log(CORS_ORIGIN);
 
 export default app;

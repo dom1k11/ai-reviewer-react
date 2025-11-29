@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import { register } from "../../api/register";
+import { register } from "../../api/register";
 import RegisterForm from "../../components/RegisterForm/RegisterForm";
 import { validateForm } from "../../utils/validation/validateForm";
 import { registerSchema } from "../../utils/validation/authSchemas";
@@ -24,7 +24,7 @@ const RegisterPage = () => {
       return;
     }
     try {
-      // await register(data.name, data.email, data.password);
+      await register(data.name, data.email, data.password);
       setSuccess("✅ Registration successful! You can log in now! Redirecting...");
       setTimeout(() => navigate("/login"), 3000);
     } catch (err) {
