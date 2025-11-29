@@ -7,10 +7,6 @@ export default function Header() {
 
   return (
     <header className="header">
-      <div className="user-name">
-        { `Welcome`}
-        {<span> - Your average score: {"N/A"}</span>}
-      </div>
 
       {/* Desktop buttons */}
       <div className="desktop-buttons">
@@ -20,6 +16,11 @@ export default function Header() {
 
         <Link to="/stats">
           <button className="btn btn-secondary mx-2">Stats</button>
+        </Link>
+      </div>
+      <div className="right-side">
+        <Link to="/login">
+          <button className="btn btn-primary">Log in</button>
         </Link>
       </div>
 
@@ -40,6 +41,9 @@ export default function Header() {
 
             <Link to="/stats">
               <button className="btn btn-secondary my-1">Stats</button>
+            </Link>
+            <Link to="/login">
+              <button className="btn btn-primary my-1">Log in</button>
             </Link>
           </div>
         )}
