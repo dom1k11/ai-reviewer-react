@@ -1,5 +1,5 @@
 import "./ReviewSection.css";
-
+import ReactMarkdown from "react-markdown";
 export default function ReviewSection({ result }) {
   if (!result) {
     return (
@@ -13,8 +13,10 @@ export default function ReviewSection({ result }) {
   return (
     <div className="review-section">
       <h2>Review Result</h2>
-      <div className="review-body">
-        <p>{result.review}</p>
+
+      <div className="review-body markdown-body">
+        <ReactMarkdown>{result.review}</ReactMarkdown>
+
         <p>
           <strong>Score:</strong> {result.score}
         </p>
