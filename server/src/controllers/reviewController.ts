@@ -1,9 +1,9 @@
-import { reviewAndStoreRepo } from "@/services/reviewService";
+import { reviewRepo } from "@/services/reviewService";
 import { getReviewById } from "@/queries/review";
 import { controller } from "@/utils/controllerWrapper";
 export const reviewCode = controller(async (req, res) => {
   const { repoUrl } = req.body;
-  const result = await reviewAndStoreRepo({ repoUrl });
+  const result = await reviewRepo({ repoUrl });
   res.status(201).json(result);
 }, "handlePostMessage");
 
