@@ -6,3 +6,9 @@ export function getReview(repoUrl: string) {
     body: JSON.stringify({ repoUrl }),
   });
 }
+
+
+export function fetchReviews(user_id: number) {
+  return apiWrapper(`/inventories/${user_id}`);
+}
+
