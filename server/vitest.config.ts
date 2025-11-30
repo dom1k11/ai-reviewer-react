@@ -32,11 +32,11 @@ export default defineConfig({
         "src/clients/**",
         "src/config/**",
         "src/validators/**",
-        "src/middleware/validate.ts",
         "src/types/**",
         "src/utils/",
         "src/queries/",
         "src/routes/",
+        "src/middleware/"
       ],
     },
   },

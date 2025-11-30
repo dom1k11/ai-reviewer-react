@@ -58,3 +58,4 @@ Rules:
 
 8. Score: Return the final numeric score at the end as:
    Score: X
+

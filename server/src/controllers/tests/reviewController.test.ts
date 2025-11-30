@@ -28,9 +28,9 @@ describe("handleReviewCode", () => {
 
     await handleReviewCode(req as any, res as any);
 
-    expect(reviewService.reviewRepo).toHaveBeenCalledWith({
-      repoUrl: "https://github.com/test/repo",
-    });
+    expect(reviewService.reviewRepo).toHaveBeenCalledWith(
+      "https://github.com/test/repo"
+    );
 
     expect(res.status).toHaveBeenCalledWith(201);
     expect(res.json).toHaveBeenCalledWith(mockResult);
@@ -43,6 +43,7 @@ vi.mock("@/queries/user/getUserId", () => ({
 
 vi.mock("@/queries/review/review", () => ({
   getReviewsByUserId: vi.fn(),
+  insertReview: vi.fn(),
 }));
 
 describe("handleGetUserReviews", () => {

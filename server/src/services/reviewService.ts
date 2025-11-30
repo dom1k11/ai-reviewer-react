@@ -4,7 +4,7 @@ import {
 } from "@/services/openaiService";
 import { getFileContent, filterExts } from "@/services/githubService";
 import { parseRepoUrl } from "@/utils/getRepo";
-export async function reviewRepo( repoUrl : string ) {
+export async function reviewRepo( repoUrl ) {
   try {
     const { owner, repo } = parseRepoUrl(repoUrl);
 
