@@ -1,14 +1,16 @@
 import fs from "fs";
 import path from "path";
 import pg from "pg";
+import dotenv from "dotenv";
 
-export async function runSeeds(connectionString: string) {
+dotenv.config();
+
+const pool = new pg.Pool({
+  connectionString: process.env.DATABASE_URL,
+});
+
+async function runSeeds() {
   const seedsDir = path.resolve("src", "db", "seeds");
-
-  if (!fs.existsSync(seedsDir)) return;
-
-  const pool = new pg.Pool({ connectionString });
-
   const files = fs
     .readdirSync(seedsDir)
     .filter((f) => f.endsWith(".sql"))
@@ -17,8 +19,16 @@ export async function runSeeds(connectionString: string) {
   for (const file of files) {
     const sql = fs.readFileSync(path.join(seedsDir, file), "utf8");
     console.log(`▶ Running seed: ${file}`);
-    await pool.query(sql);
+    try {
+      await pool.query(sql);
+    } catch (err) {
+      console.error(`❌ Failed on ${file}:`, err instanceof Error ? err.message : String(err));
+      process.exit(1);
+    }
   }
 
   await pool.end();
+  console.log("✅ Seeds completed.");
 }
+
+runSeeds();

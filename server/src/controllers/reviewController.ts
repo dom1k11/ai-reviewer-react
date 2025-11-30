@@ -1,21 +1,16 @@
 import { reviewRepo } from "@/services/reviewService";
-import { getReviewById } from "@/queries/review";
 import { controller } from "@/utils/controllerWrapper";
-export const reviewCode = controller(async (req, res) => {
+import { getReviewsByUserId } from "@/queries/review/review";
+import { getUserId } from "@/queries/user/getUserId";
+export const handleReviewCode = controller(async (req, res) => {
   const { repoUrl } = req.body;
   const result = await reviewRepo({ repoUrl });
   res.status(201).json(result);
-}, "handlePostMessage");
+}, "handleReviewCode");
 
-// export const handleGetUserReviews = controller(async (req, res) => {
-//   const sub = req.auth?.payload.sub;
-//   const userId = await getUserIdBySub(sub);
-//   const reviews = await getReviewsByUserId(userId.id);
-//   res.json(reviews);
-// }, "handleGetUserReviews");
-
-export const handleGetReviewById = controller(async (req, res) => {
-  const reviewId = Number(req.params.id);
-  const review = await getReviewById(reviewId);
-  res.json(review);
-}, "handleGetReviewById");
+export const handleGetUserReviews = controller(async (req, res) => {
+  const { user_id } = req.params;
+  const userId = await getUserId(user_id);
+  const reviews = await getReviewsByUserId(userId.id);
+  res.json(reviews);
+}, "handleGetUserReviews");
