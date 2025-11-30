@@ -1,8 +1,8 @@
 import { controller } from '../utils/controllerWrapper';
 import { findUserByEmail } from '../queries/login/findUserByEmail';
 
-import { validatePassword } from '../services/validatePassword';
-import { generateToken } from '../services/jwtService';
+import { validatePassword } from '../utils/validatePassword';
+import { generateToken } from '../utils/jwtGenerator';
 
 export const handleLogin = controller(async (req, res) => {
   const { email, password } = req.body;
