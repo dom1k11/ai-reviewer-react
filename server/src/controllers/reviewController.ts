@@ -4,11 +4,11 @@ import { getReviewsByUserId, insertReview } from "@/queries/review/review";
 import { getUserId } from "@/queries/user/getUserId";
 export const handleReviewCode = controller(async (req, res) => {
   const { repoUrl } = req.body;
-  const result = await reviewRepo( repoUrl );
-  console.log(result)
-  insertReview(1, result.score, result.review) //TODO add user_id to req.body
+  const result = await reviewRepo(repoUrl);
+  await insertReview(req.user.id, result.score, result.review);
   res.status(201).json(result);
 }, "handleReviewCode");
+
 
 export const handleGetUserReviews = controller(async (req, res) => {
   const { user_id } = req.params;

@@ -7,11 +7,10 @@ import {
   handleGetUserReviews,
   handleReviewCode,
 } from "../controllers/reviewController";
-
+import { authMiddleware } from "@/middleware/authMiddleware";
 const router = Router();
 
-router.post("/", validateBody(PostURLSchema), handleReviewCode);
-router.get("/:user_id", handleGetUserReviews); //Add validation
-// router.get("/:id", handleGetReviewById); //Add Validation
+router.post("/", authMiddleware, validateBody(PostURLSchema), handleReviewCode);
+router.get("/:user_id", authMiddleware, handleGetUserReviews); 
 
 export default router;
