@@ -9,6 +9,6 @@ export function getReview(repoUrl: string) {
 
 
 export function fetchReviews(user_id: number) {
-  return apiWrapper(`/inventories/${user_id}`);
+  return apiWrapper(`/review/${user_id}`);
 }
 
