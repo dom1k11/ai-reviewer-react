@@ -1,7 +1,5 @@
-import "./RegisterForm.css";
 import { useNavigate } from "react-router-dom";
-
-export const RegisterForm = ({ name, email, password, errors, success, onChange, onSubmit }) => {
+const RegisterForm = ({ form, onChange, onSubmit, errors }) => {
   const navigate = useNavigate();
 
   return (
@@ -11,9 +9,8 @@ export const RegisterForm = ({ name, email, password, errors, success, onChange,
       <label>
         Name
         <input
-          placeholder="John Doe"
           type="text"
-          value={name}
+          value={form.name}
           onChange={(e) => onChange("name", e.target.value)}
         />
       </label>
@@ -22,9 +19,8 @@ export const RegisterForm = ({ name, email, password, errors, success, onChange,
       <label>
         Email
         <input
-          placeholder="email@example.com"
           type="email"
-          value={email}
+          value={form.email}
           onChange={(e) => onChange("email", e.target.value)}
         />
       </label>
@@ -33,25 +29,19 @@ export const RegisterForm = ({ name, email, password, errors, success, onChange,
       <label>
         Password
         <input
-          placeholder="Minimum 3 characters"
           type="password"
-          value={password}
+          value={form.password}
           onChange={(e) => onChange("password", e.target.value)}
         />
       </label>
       {errors?.password && <p className="error-text">{errors.password}</p>}
 
-      <button className="btn btn-primary" onClick={onSubmit}>
-        Sign up
+      <button className="btn btn-primary mt-3" onClick={onSubmit}>
+        Next Step
       </button>
-
-      <br />
-
-      <button className="btn btn-light" onClick={() => navigate("/login")}>
+      <button className="btn btn-light mt-2" onClick={() => navigate("/login")}>
         Back to login
       </button>
-
-      {success && <p className="success-text">{success}</p>}
     </div>
   );
 };
