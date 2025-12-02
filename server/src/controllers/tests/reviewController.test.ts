@@ -20,7 +20,10 @@ describe("handleReviewCode", () => {
   });
 
   it("should call reviewRepo and return 201 with result", async () => {
-    const req = { body: { repoUrl: "https://github.com/test/repo" } };
+    const req = {
+      body: { repoUrl: "https://github.com/test/repo" },
+      user: { id: 1 },
+    };
     const res = makeRes();
 
     const mockResult = { review: "OK", score: 88 };
@@ -28,9 +31,10 @@ describe("handleReviewCode", () => {
 
     await handleReviewCode(req as any, res as any);
 
-    expect(reviewService.reviewRepo).toHaveBeenCalledWith(
-      "https://github.com/test/repo"
-    );
+    expect(reviewService.reviewRepo).toHaveBeenCalledWith({
+      repoUrl: "https://github.com/test/repo",
+      criteria: [],
+    });
 
     expect(res.status).toHaveBeenCalledWith(201);
     expect(res.json).toHaveBeenCalledWith(mockResult);

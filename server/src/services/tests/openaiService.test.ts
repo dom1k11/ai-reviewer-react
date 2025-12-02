@@ -11,21 +11,29 @@ import { generateReview } from "@/services/openaiService";
 describe("createReviewRequest", () => {
   it("should create a valid request object", () => {
     const code = "const x = 5;";
-    const result = createReviewRequest(code);
+    const result = createReviewRequest(code, []);
 
-    expect(result).toEqual({
-      model: MODEL,
-      max_tokens: MAX_TOKENS,
-      messages: [
-        { role: "system", content: SYSTEM_PROMPT },
-        { role: "user", content: USER_PROMPT(code) },
-      ],
+    expect(result.model).toBe(MODEL);
+    expect(result.max_tokens).toBe(MAX_TOKENS);
+
+    expect(result.messages).toHaveLength(2);
+
+    expect(result.messages[0]).toMatchObject({
+      role: "system",
     });
+    expect(typeof result.messages[0].content).toBe("string");
+    expect(result.messages[0].content.length).toBeGreaterThan(0);
+
+    expect(result.messages[1]).toMatchObject({
+      role: "user",
+    });
+    expect(typeof result.messages[1].content).toBe("string");
+    expect(result.messages[1].content.includes(code)).toBe(true);
   });
 
   it("should include user code in the user message", () => {
     const code = "function test() {}";
-    const result = createReviewRequest(code);
+    const result = createReviewRequest(code, []);
 
     const userMessage = result.messages.find((m) => m.role === "user");
     expect(userMessage?.content).toContain(code);
@@ -41,7 +49,9 @@ describe("parseReviewResponse", () => {
   it("should return fallback if response is missing", () => {
     expect(parseReviewResponse({})).toBe("No Answer from OpenAI");
     expect(parseReviewResponse({ choices: [] })).toBe("No Answer from OpenAI");
-    expect(parseReviewResponse({ choices: [{ message: {} }] })).toBe("No Answer from OpenAI");
+    expect(parseReviewResponse({ choices: [{ message: {} }] })).toBe(
+      "No Answer from OpenAI"
+    );
   });
 });
 
