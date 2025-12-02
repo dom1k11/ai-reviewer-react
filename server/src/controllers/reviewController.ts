@@ -3,12 +3,14 @@ import { controller } from "@/utils/controllerWrapper";
 import { getReviewsByUserId, insertReview } from "@/queries/review/review";
 import { getUserId } from "@/queries/user/getUserId";
 export const handleReviewCode = controller(async (req, res) => {
-  const { repoUrl } = req.body;
-  const result = await reviewRepo(repoUrl);
+  const { repoUrl, criteria = [] } = req.body;
+  const result = await reviewRepo({
+    repoUrl,
+    criteria,
+  });
   await insertReview(req.user.id, result.score, result.review);
   res.status(201).json(result);
 }, "handleReviewCode");
-
 
 export const handleGetUserReviews = controller(async (req, res) => {
   const { user_id } = req.params;

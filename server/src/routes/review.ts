@@ -10,7 +10,10 @@ import {
 import { authMiddleware } from "@/middleware/authMiddleware";
 const router = Router();
 
-router.post("/", authMiddleware, validateBody(PostURLSchema), handleReviewCode);
-router.get("/:user_id", authMiddleware, handleGetUserReviews); 
+router.post("/", 
+  authMiddleware,
+  validateBody(PostURLSchema),
+  handleReviewCode);
+router.get("/:user_id", authMiddleware, handleGetUserReviews);
 
 export default router;
