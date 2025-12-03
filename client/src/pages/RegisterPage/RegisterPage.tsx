@@ -42,19 +42,22 @@ const RegisterPage = () => {
     setErrors({});
     setSuccess("");
 
-    // const { valid, errors, data } = validateForm(registerSchema, form);
-    // if (!valid) {
-    //   setErrors(errors);
-    //   return;
-    // }
+    const { valid, errors, data } = validateForm(registerSchema, form);
+    if (!valid) {
+      setErrors(errors);
+      return;
+    }
 
     try {
-      // await register(data.name, data.email, data.password, {
-      //   specialization: form.specialization,
-      //   experience: form.experience,
-      //   tone: form.tone,
-      //   style: form.style,
-      // });
+      await register({
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        specialization: form.specialization,
+        experience: form.experience,
+        tone: form.tone,
+        style: form.style,
+      });
 
       setSuccess("Registration successful! Redirecting...");
       setTimeout(() => navigate("/login"), 2000);
