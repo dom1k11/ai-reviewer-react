@@ -15,7 +15,7 @@ export default function ReqSelector({ criteria, onChangeCriteria }) {
   }
 
   return (
-    <div className="requirements">
+    <div className="presets" id = "presets">
       <h4>Review Presets</h4>
 
       <select

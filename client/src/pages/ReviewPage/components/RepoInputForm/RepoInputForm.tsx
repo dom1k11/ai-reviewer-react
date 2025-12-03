@@ -20,7 +20,7 @@ export default function RepoInputForm({ onReviewReady, setLoading }) {
   }
 
   return (
-    <div className="req-selector">
+    <div className="req-selector" id = "req-selector">
       <h2>Get your code review</h2>
 
       <label htmlFor="repo-input">Your repository:</label>
