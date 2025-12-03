@@ -6,10 +6,16 @@ import "./ReviewBlock.css";
 
 export default function ReviewBlock() {
   const [reviewResult, setReviewResult] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
   return (
     <div className="review-block">
-      <RepoInputForm onReviewReady={setReviewResult} />
-      <ReviewSection result={reviewResult} />
+      <RepoInputForm
+        onReviewReady={setReviewResult}
+        setLoading={setIsLoading}
+      />
+
+      <ReviewSection result={reviewResult} loading={isLoading} />
     </div>
   );
 }

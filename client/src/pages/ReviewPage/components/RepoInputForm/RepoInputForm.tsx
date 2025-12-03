@@ -3,15 +3,20 @@ import "./RepoInputForm.css";
 import ReqSelector from "../ReqSelector/ReqSelector";
 import { getReview } from "../../../../api/review";
 
-export default function RepoInputForm({ onReviewReady }) {
+export default function RepoInputForm({ onReviewReady, setLoading }) {
   const [repoUrl, setRepoUrl] = useState(
     "https://github.com/dom1k11/code-template"
   );
   const [criteria, setCriteria] = useState([]);
   console.log(criteria);
   async function handleSend() {
-    const review = await getReview(repoUrl, criteria);
-    onReviewReady(review);
+    try {
+      setLoading(true);
+      const review = await getReview(repoUrl, criteria);
+      onReviewReady(review);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
