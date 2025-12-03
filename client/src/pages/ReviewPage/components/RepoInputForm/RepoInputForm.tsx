@@ -2,8 +2,9 @@ import { useState } from "react";
 import "./RepoInputForm.css";
 import ReqSelector from "../ReqSelector/ReqSelector";
 import { getReview } from "../../../../api/review";
-
+import { isLoggedIn } from "../../../../helpers/auth";
 export default function RepoInputForm({ onReviewReady, setLoading }) {
+  const loggedIn = isLoggedIn();
   const [repoUrl, setRepoUrl] = useState(
     "https://github.com/dom1k11/code-template"
   );
@@ -20,7 +21,7 @@ export default function RepoInputForm({ onReviewReady, setLoading }) {
   }
 
   return (
-    <div className="req-selector" id = "req-selector">
+    <div className="req-selector" id="req-selector">
       <h2>Get your code review</h2>
 
       <label htmlFor="repo-input">Your repository:</label>
@@ -34,8 +35,12 @@ export default function RepoInputForm({ onReviewReady, setLoading }) {
 
       <ReqSelector criteria={criteria} onChangeCriteria={setCriteria} />
 
-      <button className="btn btn-primary send-btn" onClick={handleSend}>
-        Get review
+      <button
+        className="btn btn-primary send-btn"
+        onClick={handleSend}
+        disabled={!loggedIn}
+      >
+        {loggedIn ? "Get review" : "Login to get review"}
       </button>
     </div>
   );
