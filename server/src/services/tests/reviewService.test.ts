@@ -22,7 +22,9 @@ vi.mock("@/services/openaiService", () => ({
 
 describe("reviewAndStoreRepo", () => {
   const baseArgs = {
-    repoUrl: "https://github.com/dom1k11/code-template",
+    repoUrl: "https://github.com/test/repo",
+    criteria: [],
+    prefs: {},
   };
 
   beforeEach(() => {

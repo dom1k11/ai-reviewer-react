@@ -5,13 +5,14 @@ import { getUserId, getUserPreference } from "@/queries/user/getUserId";
 
 export const handleReviewCode = controller(async (req, res) => {
   const { repoUrl, criteria = [] } = req.body;
+
   const prefs = await getUserPreference(req.user.id);
   const result = await reviewRepo({
     repoUrl,
     criteria,
     prefs,
   });
-  await insertReview(req.user.id, result.score, result.review);
+  await insertReview(Number(req.user.id), result.score, result.review);
   res.status(201).json(result);
 }, "handleReviewCode");
 

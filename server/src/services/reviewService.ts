@@ -4,7 +4,23 @@ import {
 } from "@/services/openaiService";
 import { getFileContent, filterExts } from "@/services/githubService";
 import { parseRepoUrl } from "@/utils/getRepo";
-export async function reviewRepo({ repoUrl, criteria, prefs }) {
+
+export type ReviewRepoInput = {
+  repoUrl: string;
+  criteria: string[];
+  prefs: any;
+};
+
+export type ReviewRepoResult = {
+  review: string;
+  score: number;
+};
+
+export async function reviewRepo({
+  repoUrl,
+  criteria,
+  prefs,
+}: ReviewRepoInput): Promise<ReviewRepoResult> {
   try {
     const { owner, repo } = parseRepoUrl(repoUrl);
 

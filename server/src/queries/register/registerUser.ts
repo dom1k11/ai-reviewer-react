@@ -1,14 +1,16 @@
 import { pool } from "@/db";
+import { RegisterUserInput } from "../../types/user";
+export async function registerUser(data: RegisterUserInput) {
+  const {
+    name,
+    email,
+    password_hash,
+    specialization,
+    experience,
+    tone,
+    style,
+  } = data;
 
-export async function registerUser({
-  name,
-  email,
-  password_hash,
-  specialization,
-  experience,
-  tone,
-  style,
-}) {
   const client = await pool.connect();
 
   try {

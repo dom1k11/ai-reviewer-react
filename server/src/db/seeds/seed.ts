@@ -9,7 +9,7 @@ const pool = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
 });
 
-async function runSeeds() {
+export async function runSeeds() {
   const seedsDir = path.resolve("src", "db", "seeds");
   const files = fs
     .readdirSync(seedsDir)

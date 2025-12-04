@@ -3,7 +3,7 @@ import { callOpenAI } from "@/clients/openaiClient";
 export function createReviewRequest(
   code: string,
   criteria: string[],
-  prefs: any
+  prefs: UserPreferences
 ) {
   return {
     model: MODEL,
@@ -19,10 +19,11 @@ export function parseReviewResponse(data: any): string {
   return data.choices?.[0]?.message?.content ?? "No Answer from OpenAI";
 }
 import { mockReview } from "../utils/reviewMock";
+import { UserPreferences } from "@/types/UserPreferences";
 export async function generateReview(
   code: string,
   criteria: string[],
-  prefs: any
+  prefs: UserPreferences
 ) {
   if (process.env.USE_MOCK_AI === "true") {
     console.log("⚠️ Using mock AI");

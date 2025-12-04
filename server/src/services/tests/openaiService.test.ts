@@ -1,7 +1,7 @@
 import { describe, it, expect, afterEach } from "vitest";
 
 import { createReviewRequest } from "@/services/openaiService";
-import { MODEL, SYSTEM_PROMPT, USER_PROMPT, MAX_TOKENS } from "@/config/openai";
+import { MODEL, MAX_TOKENS } from "@/config/openai";
 import { extractScoreFromReview } from "@/services/openaiService";
 import { parseReviewResponse } from "@/services/openaiService";
 import { vi } from "vitest";
@@ -11,7 +11,9 @@ import { generateReview } from "@/services/openaiService";
 describe("createReviewRequest", () => {
   it("should create a valid request object", () => {
     const code = "const x = 5;";
-    const result = createReviewRequest(code, []);
+    const prefs = {}
+
+    const result = createReviewRequest(code, [], prefs);
 
     expect(result.model).toBe(MODEL);
     expect(result.max_tokens).toBe(MAX_TOKENS);
@@ -33,7 +35,7 @@ describe("createReviewRequest", () => {
 
   it("should include user code in the user message", () => {
     const code = "function test() {}";
-    const result = createReviewRequest(code, []);
+    const result = createReviewRequest(code, [], {});
 
     const userMessage = result.messages.find((m) => m.role === "user");
     expect(userMessage?.content).toContain(code);
@@ -84,7 +86,7 @@ describe("generateReview", () => {
       choices: [{ message: { content: mockReview } }],
     });
 
-    const result = await generateReview("code");
+    const result = await generateReview("code", [], {});
     expect(result).toBe(mockReview);
   });
 });

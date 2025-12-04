@@ -4,6 +4,7 @@ import * as reviewService from "@/services/reviewService";
 import { handleGetUserReviews } from "../../controllers/reviewController";
 import * as userQuery from "@/queries/user/getUserId";
 import * as reviewQuery from "@/queries/review/review";
+import { Review } from "@/types/review";
 
 vi.mock("@/services/reviewService", () => ({
   reviewRepo: vi.fn(),
@@ -66,9 +67,14 @@ describe("handleGetUserReviews", () => {
 
     vi.spyOn(userQuery, "getUserId").mockResolvedValue({ id: 1 });
 
-    const mockReviews = [
-      { user_id: 1, review: "Nice", score: 90 },
-      { user_id: 1, review: "Ok", score: 75 },
+    const mockReviews: Review[] = [
+      {
+        id: 1,
+        userId: 1,
+        repoId: 1,
+        score: 90,
+        createdAt: new Date(),
+      },
     ];
 
     vi.spyOn(reviewQuery, "getReviewsByUserId").mockResolvedValue(mockReviews);
