@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-async function runMigrations() {
+export async function runMigrations() {
   console.log("DATABASE_URL:", process.env.DATABASE_URL);
 
   const pool = new pg.Pool({

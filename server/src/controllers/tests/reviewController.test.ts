@@ -4,6 +4,7 @@ import * as reviewService from "@/services/reviewService";
 import { handleGetUserReviews } from "../../controllers/reviewController";
 import * as userQuery from "@/queries/user/getUserId";
 import * as reviewQuery from "@/queries/review/review";
+import { Review } from "@/types/review";
 
 vi.mock("@/services/reviewService", () => ({
   reviewRepo: vi.fn(),
@@ -20,7 +21,10 @@ describe("handleReviewCode", () => {
   });
 
   it("should call reviewRepo and return 201 with result", async () => {
-    const req = { body: { repoUrl: "https://github.com/test/repo" } };
+    const req = {
+      body: { repoUrl: "https://github.com/test/repo" },
+      user: { id: 1 },
+    };
     const res = makeRes();
 
     const mockResult = { review: "OK", score: 88 };
@@ -28,9 +32,10 @@ describe("handleReviewCode", () => {
 
     await handleReviewCode(req as any, res as any);
 
-    expect(reviewService.reviewRepo).toHaveBeenCalledWith(
-      "https://github.com/test/repo"
-    );
+    expect(reviewService.reviewRepo).toHaveBeenCalledWith({
+      repoUrl: "https://github.com/test/repo",
+      criteria: [],
+    });
 
     expect(res.status).toHaveBeenCalledWith(201);
     expect(res.json).toHaveBeenCalledWith(mockResult);
@@ -62,9 +67,14 @@ describe("handleGetUserReviews", () => {
 
     vi.spyOn(userQuery, "getUserId").mockResolvedValue({ id: 1 });
 
-    const mockReviews = [
-      { user_id: 1, review: "Nice", score: 90 },
-      { user_id: 1, review: "Ok", score: 75 },
+    const mockReviews: Review[] = [
+      {
+        id: 1,
+        userId: 1,
+        repoId: 1,
+        score: 90,
+        createdAt: new Date(),
+      },
     ];
 
     vi.spyOn(reviewQuery, "getReviewsByUserId").mockResolvedValue(mockReviews);

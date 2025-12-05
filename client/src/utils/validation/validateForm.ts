@@ -1,4 +1,5 @@
-export function validateForm(schema, data) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function validateForm(schema: any, data: any) {
   const result = schema.safeParse(data);
 
   if (!result.success) {
