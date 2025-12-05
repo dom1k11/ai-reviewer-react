@@ -14,8 +14,14 @@ export function createReviewRequest(
     max_tokens: MAX_TOKENS,
   };
 }
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function parseReviewResponse(data: any): string {
+type OpenAIChatResponse = {
+  choices?: Array<{
+    message?: {
+      content?: string | null;
+    };
+  }>;
+};
+export function parseReviewResponse(data: OpenAIChatResponse): string {
   return data.choices?.[0]?.message?.content ?? "No Answer from OpenAI";
 }
 import { mockReview } from "../utils/reviewMock";

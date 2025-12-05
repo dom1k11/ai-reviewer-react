@@ -1,5 +1,9 @@
 import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
+
+type TokenPayload = JwtPayload & {
+  id: string;
+};
 
 export function authMiddleware(
   req: Request,
@@ -14,20 +18,16 @@ export function authMiddleware(
     }
 
     const token = authHeader.split(" ")[1];
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as TokenPayload;
 
-    if (
-      typeof decoded !== "object" ||
-      decoded === null ||
-      typeof (decoded as any).id !== "string"
-    ) {
+    if (!decoded.id) {
       return res.status(401).json({ error: "Invalid token payload" });
     }
 
-    req.user = decoded as { id: string };
+    req.user = { id: decoded.id };
 
     next();
-  } catch (err) {
+  } catch {
     return res.status(401).json({ error: "Invalid or expired token" });
   }
 }

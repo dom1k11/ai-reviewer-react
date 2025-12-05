@@ -1,5 +1,6 @@
 {
   "name": "server",
+  "type": "module",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -12,7 +13,9 @@
     "seed": "npx ts-node src/db/seeds/seed.ts",
     "check-types": "tsc --noEmit",
     "build": "tsc && tsc-alias && cpx \"src/config/systemPrompt.md\" dist/config",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "keywords": [],
   "author": "",

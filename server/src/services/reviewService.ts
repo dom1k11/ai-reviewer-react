@@ -8,7 +8,7 @@ import { parseRepoUrl } from "@/utils/getRepo";
 export type ReviewRepoInput = {
   repoUrl: string;
   criteria: string[];
-  prefs: any;
+  prefs: unknown;
 };
 
 export type ReviewRepoResult = {
@@ -32,11 +32,11 @@ export async function reviewRepo({
     );
 
     const full = codes.join("\n\n/* --- next file --- */\n\n");
-    const review = await generateReview(full, criteria, prefs);
+    const review = await generateReview(full, criteria, {prefs});
     const score = extractScoreFromReview(review) ?? 0;
 
     return { review, score };
   } catch (err) {
-    throw new Error("Failed to process review");
+    throw new Error("Failed to process review", err);
   }
 }
