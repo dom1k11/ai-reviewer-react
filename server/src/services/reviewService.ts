@@ -8,6 +8,7 @@ import { UserPreferences } from "@/types/UserPreferences";
 export type ReviewRepoResult = {
   review: string;
   score: number;
+  
 };
 
 export type ReviewRepoInput = {
