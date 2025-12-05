@@ -1,6 +1,6 @@
 import { API_URL } from "../constants/api_url";
 
-export async function login(email, password) {
+export async function login(email: string, password: string) {
   const res = await fetch(`${API_URL}/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

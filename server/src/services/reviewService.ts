@@ -4,7 +4,24 @@ import {
 } from "@/services/openaiService";
 import { getFileContent, filterExts } from "@/services/githubService";
 import { parseRepoUrl } from "@/utils/getRepo";
-export async function reviewRepo( repoUrl ) {
+import { UserPreferences } from "@/types/UserPreferences";
+export type ReviewRepoResult = {
+  review: string;
+  score: number;
+  
+};
+
+export type ReviewRepoInput = {
+  repoUrl: string;
+  criteria: string[];
+  prefs: UserPreferences;
+};
+
+export async function reviewRepo({
+  repoUrl,
+  criteria,
+  prefs,
+}: ReviewRepoInput): Promise<ReviewRepoResult> {
   try {
     const { owner, repo } = parseRepoUrl(repoUrl);
 
@@ -16,11 +33,13 @@ export async function reviewRepo( repoUrl ) {
     );
 
     const full = codes.join("\n\n/* --- next file --- */\n\n");
-    const review = await generateReview(full);
+
+    const review = await generateReview(full, criteria, prefs);
+
     const score = extractScoreFromReview(review) ?? 0;
 
     return { review, score };
-  } catch (err) {
+  } catch {
     throw new Error("Failed to process review");
   }
 }
