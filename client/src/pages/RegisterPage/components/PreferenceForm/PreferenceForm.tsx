@@ -1,4 +1,22 @@
-const PreferenceForm = ({ form, onChange, prevStep, onFinish, success }) => {
+type PreferenceFormProps = {
+  form: {
+    experience: string;
+    tone: string;
+    style: string;
+  };
+  onChange: (field: string, value: string) => void;
+  prevStep: () => void;
+  onFinish: () => void;
+  success: string | null;
+};
+
+const PreferenceForm = ({
+  form,
+  onChange,
+  prevStep,
+  onFinish,
+  success,
+}: PreferenceFormProps) => {
   return (
     <div className="login-container">
       <h1>Preferences</h1>

@@ -1,6 +1,16 @@
 import ReviewCard from "../ReviewCard/ReviewCard";
-import './ReviewList.css'
-export default function ReviewList({ reviews }) {
+import "./ReviewList.css";
+
+type Review = {
+  review: string;
+  score: number;
+};
+
+type ReviewListProps = {
+  reviews: Review[];
+};
+
+export default function ReviewList({ reviews }: ReviewListProps) {
   if (!reviews.length) {
     return <div className="no-reviews">No reviews yet.</div>;
   }

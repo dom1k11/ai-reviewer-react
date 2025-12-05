@@ -26,7 +26,7 @@ const RegisterPage = () => {
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState("");
 
-  function handleChange(field, value) {
+  function handleChange(field: string, value: string) {
     setForm((prev) => ({ ...prev, [field]: value }));
   }
 

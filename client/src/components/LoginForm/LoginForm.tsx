@@ -1,4 +1,15 @@
 import "./LoginForm.css";
+type LoginFormProps = {
+  email: string;
+  password: string;
+  loading: boolean;
+  error: string | null;
+  onChange: (field: "email" | "password", value: string) => void;
+  onSubmit: () => void;
+  onGoToRegister: () => void;
+  onGuestLogin: () => void;
+};
+
 
 const LoginForm = ({
   email,
@@ -9,7 +20,7 @@ const LoginForm = ({
   onSubmit,
   onGoToRegister,
   onGuestLogin,
-}) => {
+}: LoginFormProps) => {
   return (
     <div className="login-container">
       <h1>Login</h1>

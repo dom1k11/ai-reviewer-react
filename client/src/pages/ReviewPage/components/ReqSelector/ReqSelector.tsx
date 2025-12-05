@@ -1,21 +1,30 @@
 import { presets, options } from "./constants/options";
-export default function ReqSelector({ criteria, onChangeCriteria }) {
-  function applyPreset(value) {
+
+type ReqSelectorProps = {
+  criteria: string[];
+  onChangeCriteria: (next: string[] | ((prev: string[]) => string[])) => void;
+};
+
+export default function ReqSelector({
+  criteria,
+  onChangeCriteria,
+}: ReqSelectorProps) {
+  function applyPreset(value: string) {
     if (!value) {
       onChangeCriteria([]);
     } else {
-      onChangeCriteria(presets[value]);
+      onChangeCriteria((presets as Record<string, string[]>)[value]);
     }
   }
 
-  function handleToggle(value) {
+  function handleToggle(value: string) {
     onChangeCriteria((prev) =>
       prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
     );
   }
 
   return (
-    <div className="presets" id = "presets">
+    <div className="presets" id="presets">
       <h4>Review Presets</h4>
 
       <select

@@ -1,7 +1,16 @@
 import "./ReviewSection.css";
 import ReactMarkdown from "react-markdown";
 import Loader from "../../../../components/Loader/Loader";
-export default function ReviewSection({ result, loading }) {
+
+type ReviewSectionProps = {
+  loading: boolean;
+  result: null | {
+    review: string;
+    score: number;
+  };
+};
+
+export default function ReviewSection({ result, loading }: ReviewSectionProps) {
   if (loading) {
     return (
       <div className="review-section review-loading">
@@ -12,7 +21,7 @@ export default function ReviewSection({ result, loading }) {
 
   if (!result) {
     return (
-      <div className="review-section" id = "review-section">
+      <div className="review-section" id="review-section">
         <h2>Review Result</h2>
         <p>No review yet.</p>
       </div>

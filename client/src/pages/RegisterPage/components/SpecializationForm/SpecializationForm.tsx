@@ -1,4 +1,18 @@
-const SpecializationForm = ({ form, onChange, nextStep, prevStep }) => {
+type SpecializationFormProps = {
+  form: {
+    specialization: string;
+  };
+  onChange: (field: string, value: string) => void;
+  nextStep: () => void;
+  prevStep: () => void;
+};
+
+const SpecializationForm = ({
+  form,
+  onChange,
+  nextStep,
+  prevStep,
+}: SpecializationFormProps) => {
   return (
     <div className="login-container">
       <h1>Select Specialization</h1>

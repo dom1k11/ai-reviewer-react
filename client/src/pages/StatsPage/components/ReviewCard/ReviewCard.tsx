@@ -2,7 +2,15 @@ import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import "./ReviewCard.css";
 
-export default function ReviewCard({ review, index }) {
+type ReviewCardProps = {
+  review: {
+    review: string;
+    score: number;
+  };
+  index: number;
+};
+
+export default function ReviewCard({ review, index }: ReviewCardProps) {
   const [expanded, setExpanded] = useState(false);
 
   const text = review.review;

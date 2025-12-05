@@ -3,13 +3,27 @@ import "./RepoInputForm.css";
 import ReqSelector from "../ReqSelector/ReqSelector";
 import { getReview } from "../../../../api/review";
 import { isLoggedIn } from "../../../../helpers/auth";
-export default function RepoInputForm({ onReviewReady, setLoading }) {
+
+type ReviewResult = {
+  review: string;
+  score: number;
+};
+
+type RepoInputFormProps = {
+  onReviewReady: (review: ReviewResult) => void;
+  setLoading: (loading: boolean) => void;
+};
+
+export default function RepoInputForm({
+  onReviewReady,
+  setLoading,
+}: RepoInputFormProps) {
   const loggedIn = isLoggedIn();
   const [repoUrl, setRepoUrl] = useState(
     "https://github.com/dom1k11/code-template"
   );
-  const [criteria, setCriteria] = useState([]);
-  console.log(criteria);
+const [criteria, setCriteria] = useState<string[]>([]);
+
   async function handleSend() {
     try {
       setLoading(true);

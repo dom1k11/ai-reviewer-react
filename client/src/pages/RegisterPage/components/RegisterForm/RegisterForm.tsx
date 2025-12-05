@@ -1,5 +1,26 @@
 import { useNavigate } from "react-router-dom";
-const RegisterForm = ({ form, onChange, onSubmit, errors }) => {
+
+type RegisterFormProps = {
+  form: {
+    name: string;
+    email: string;
+    password: string;
+  };
+  onChange: (field: string, value: string) => void;
+  onSubmit: () => void;
+  errors?: {
+    name?: string;
+    email?: string;
+    password?: string;
+  };
+};
+
+const RegisterForm = ({
+  form,
+  onChange,
+  onSubmit,
+  errors,
+}: RegisterFormProps) => {
   const navigate = useNavigate();
 
   return (
