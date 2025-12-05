@@ -10,6 +10,16 @@ vi.mock("@/services/reviewService", () => ({
   reviewRepo: vi.fn(),
 }));
 
+vi.mock("@/queries/user/getUserId", () => ({
+  getUserId: vi.fn(),
+  getUserPreference: vi.fn(),
+}));
+
+vi.mock("@/queries/review/review", () => ({
+  getReviewsByUserId: vi.fn(),
+  insertReview: vi.fn(),
+}));
+
 describe("handleReviewCode", () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -27,6 +37,8 @@ describe("handleReviewCode", () => {
     };
     const res = makeRes();
 
+    vi.spyOn(userQuery, "getUserPreference").mockResolvedValue({});
+
     const mockResult = { review: "OK", score: 88 };
     vi.spyOn(reviewService, "reviewRepo").mockResolvedValue(mockResult);
 
@@ -35,21 +47,13 @@ describe("handleReviewCode", () => {
     expect(reviewService.reviewRepo).toHaveBeenCalledWith({
       repoUrl: "https://github.com/test/repo",
       criteria: [],
+      prefs: {},
     });
 
     expect(res.status).toHaveBeenCalledWith(201);
     expect(res.json).toHaveBeenCalledWith(mockResult);
   });
 });
-
-vi.mock("@/queries/user/getUserId", () => ({
-  getUserId: vi.fn(),
-}));
-
-vi.mock("@/queries/review/review", () => ({
-  getReviewsByUserId: vi.fn(),
-  insertReview: vi.fn(),
-}));
 
 describe("handleGetUserReviews", () => {
   beforeEach(() => {
