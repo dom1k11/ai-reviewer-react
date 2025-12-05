@@ -62,7 +62,7 @@ const RegisterPage = () => {
       setSuccess("Registration successful! Redirecting...");
       setTimeout(() => navigate("/login"), 2000);
     } catch (err) {
-      setErrors({ email: ["Email already exists"] });
+      setErrors({ email: ["Email already exists"], err });
     }
   }
 

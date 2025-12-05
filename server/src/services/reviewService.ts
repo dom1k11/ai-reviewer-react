@@ -4,16 +4,16 @@ import {
 } from "@/services/openaiService";
 import { getFileContent, filterExts } from "@/services/githubService";
 import { parseRepoUrl } from "@/utils/getRepo";
+import { UserPreferences } from "@/types/UserPreferences";
+export type ReviewRepoResult = {
+  review: string;
+  score: number;
+};
 
 export type ReviewRepoInput = {
   repoUrl: string;
   criteria: string[];
-  prefs: unknown;
-};
-
-export type ReviewRepoResult = {
-  review: string;
-  score: number;
+  prefs: UserPreferences;
 };
 
 export async function reviewRepo({
@@ -32,11 +32,13 @@ export async function reviewRepo({
     );
 
     const full = codes.join("\n\n/* --- next file --- */\n\n");
-    const review = await generateReview(full, criteria, {prefs});
+
+    const review = await generateReview(full, criteria, prefs);
+
     const score = extractScoreFromReview(review) ?? 0;
 
     return { review, score };
-  } catch (err) {
-    throw new Error("Failed to process review", err);
+  } catch {
+    throw new Error("Failed to process review");
   }
 }
