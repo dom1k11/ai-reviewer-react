@@ -3,20 +3,21 @@
     "types": ["node", "vitest/globals"],
     "target": "ES2020",
     "module": "CommonJS",
-    "outDir": "./dist/src",
+    "outDir": "./dist",
+    "rootDir": "./src",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-    "baseUrl": "./src",
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"]
+    },
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "strictNullChecks": true,
-    "noImplicitAny": true,
-    "paths": {
-      "@/*": ["*"]
-    }
+    "noImplicitAny": true
   },
-  "include": ["src", "test"],
+  "include": ["src"],
   "exclude": ["node_modules", "dist"]
 }
