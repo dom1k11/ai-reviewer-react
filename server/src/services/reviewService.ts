@@ -8,7 +8,6 @@ import { UserPreferences } from "@/types/UserPreferences";
 export type ReviewRepoResult = {
   review: string;
   score: number;
-  
 };
 
 export type ReviewRepoInput = {
@@ -39,7 +38,9 @@ export async function reviewRepo({
     const score = extractScoreFromReview(review) ?? 0;
 
     return { review, score };
-  } catch {
-    throw new Error("Failed to process review");
-  }
+  } catch (err) {
+  console.error("💥 REVIEW REPO ERROR:", err);
+  throw new Error("Failed to process review");
+}
+
 }
