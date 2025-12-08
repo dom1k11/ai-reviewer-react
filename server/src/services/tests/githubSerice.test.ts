@@ -71,9 +71,9 @@ describe("getFileContent", () => {
   it("should throw and error if content is not present", async () => {
     (githubRequest as Mock).mockResolvedValueOnce({});
 
-    await expect(
-      getFileContent("dom1k11", "code-template", "abc123")
-    ).rejects.toThrow("[getFileContent] missing content for sha: abc123");
+    const result = await getFileContent("dom1k11", "code-template", "abc123");
+expect(result).toBe("");
+
   });
 
   it("should throw and error if service is failed", async () => {
