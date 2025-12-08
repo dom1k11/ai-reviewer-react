@@ -21,8 +21,8 @@ const USE_DB = process.env.USE_DB === "false";
 if(USE_DB)
 {
 beforeAll(async () => {
-  await runMigrations(process.env.DATABASE_URL!);
-  await runSeeds(process.env.DATABASE_URL!);
+  await runMigrations();
+  await runSeeds();
 });
 
 beforeEach(async () => {

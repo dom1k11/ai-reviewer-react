@@ -5,3 +5,9 @@
   min-height: 300px;
 }
 
+.review-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 250px;
+}
