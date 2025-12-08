@@ -3,7 +3,7 @@ export async function githubRequest<T = unknown>(
   params: object
 ): Promise<T> {
   try {
-    const { Octokit } = await import("@octokit/core");
+    const { Octokit } = await eval("import('@octokit/core')");
 
     const octokit = new Octokit({
       auth: process.env.GITHUB_TOKEN,
