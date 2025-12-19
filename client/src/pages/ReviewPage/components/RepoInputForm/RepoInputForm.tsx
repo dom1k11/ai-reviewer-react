@@ -3,7 +3,7 @@ import "./RepoInputForm.css";
 import ReqSelector from "../ReqSelector/ReqSelector";
 import { getReview } from "../../../../api/review";
 import { isLoggedIn } from "../../../../helpers/auth";
-
+import { validateRepoUrlClient } from "../../validator/repoUrl";
 type ReviewResult = {
   review: string;
   score: number;
@@ -19,14 +19,27 @@ export default function RepoInputForm({
   setLoading,
 }: RepoInputFormProps) {
   const loggedIn = isLoggedIn();
+
   const [repoUrl, setRepoUrl] = useState(
     "https://github.com/dom1k11/code-template"
   );
-const [criteria, setCriteria] = useState<string[]>([]);
+  const [criteria, setCriteria] = useState<string[]>([]);
+  const [error, setError] = useState<string | null>(null);
+
+
 
   async function handleSend() {
+    const validationError = validateRepoUrlClient(repoUrl);
+
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
     try {
+      setError(null);
       setLoading(true);
+
       const review = await getReview(repoUrl, criteria);
       onReviewReady(review);
     } finally {
@@ -41,11 +54,16 @@ const [criteria, setCriteria] = useState<string[]>([]);
       <label htmlFor="repo-input">Your repository:</label>
       <input
         id="repo-input"
-        className="form-control"
+        className={`form-control ${error ? "is-invalid" : ""}`}
         type="text"
         value={repoUrl}
-        onChange={(e) => setRepoUrl(e.target.value)}
+        onChange={(e) => {
+          setRepoUrl(e.target.value);
+          if (error) setError(null);
+        }}
       />
+
+      {error && <div className="error-text">{error}</div>}
 
       <ReqSelector criteria={criteria} onChangeCriteria={setCriteria} />
 
