@@ -1,6 +1,8 @@
 # 🧠 AI Reviewer Assistant
 
 AI Reviewer Assistant automatically generates structured code reviews for GitHub repositories using OpenAI.
+## Live Demo
+- https://ai-reviewer-client.onrender.com/
 
 ## Project Overview
 
