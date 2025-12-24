@@ -7,12 +7,15 @@ export async function getRepoTree(
   repo: string,
   branch = "main"
 ): Promise<{ tree: { path: string; type: string; sha: string }[] }> {
-  const request = await githubRequest("GET /repos/{owner}/{repo}/git/trees/{tree_sha}", {
-    owner,
-    repo,
-    tree_sha: branch,
-    recursive: "1",
-  });
+  const request = await githubRequest(
+    "GET /repos/{owner}/{repo}/git/trees/{tree_sha}",
+    {
+      owner,
+      repo,
+      tree_sha: branch,
+      recursive: "1",
+    }
+  );
 
   return request as { tree: { path: string; type: string; sha: string }[] };
 }
@@ -24,7 +27,14 @@ export async function getFileContent(
   repo: string,
   fileSha: string
 ): Promise<string> {
-  console.log("📄 [getFileContent] owner:", owner, "repo:", repo, "sha:", fileSha);
+  console.log(
+    "📄 [getFileContent] owner:",
+    owner,
+    "repo:",
+    repo,
+    "sha:",
+    fileSha
+  );
 
   try {
     const blob: GitHubBlobResponse = await githubRequest(
@@ -33,7 +43,10 @@ export async function getFileContent(
     );
 
     if (!blob.content) {
-      throw new Error(`[getFileContent] missing content for sha: ${fileSha}`);
+      console.warn(
+        `⚠️ [getFileContent] Empty file detected (sha: ${fileSha}). Returning empty string.`
+      );
+      return "";
     }
 
     return Buffer.from(blob.content, "base64").toString("utf8");

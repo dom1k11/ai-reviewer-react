@@ -3,6 +3,7 @@ import cors from "cors";
 import { CORS_ORIGIN, CORS_METHODS, CORS_HEADERS } from "./cors_config";
 import reviewRoute from "./routes/review";
 import authRoute from "./routes/authentication";
+import "dotenv/config";
 
 const app = express();
 

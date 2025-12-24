@@ -9,16 +9,21 @@ export default function Header() {
 
   return (
     <header className="header">
-
       {/* Desktop buttons */}
       <div className="desktop-buttons">
         <Link to="/app">
           <button className="btn btn-secondary mx-2">Main Page</button>
         </Link>
 
-        <Link to="/stats">
-          <button className="btn btn-secondary mx-2">Stats</button>
-        </Link>
+        {loggedIn ? (
+          <Link to="/stats">
+            <button className="btn btn-secondary mx-2">Stats</button>
+          </Link>
+        ) : (
+          <button className="btn btn-secondary mx-2" disabled>
+            Stats
+          </button>
+        )}
       </div>
       <div className="right-side">
         {loggedIn ? (
@@ -53,9 +58,15 @@ export default function Header() {
               <button className="btn btn-secondary my-1">Main Page</button>
             </Link>
 
-            <Link to="/stats">
-              <button className="btn btn-secondary my-1">Stats</button>
-            </Link>
+            {loggedIn ? (
+              <Link to="/stats">
+                <button className="btn btn-secondary mx-2">Stats</button>
+              </Link>
+            ) : (
+              <button className="btn btn-secondary mx-2" disabled>
+                Stats
+              </button>
+            )}
 
             {loggedIn ? (
               <button
