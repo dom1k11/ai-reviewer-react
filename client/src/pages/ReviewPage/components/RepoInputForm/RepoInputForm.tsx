@@ -14,6 +14,8 @@ type RepoInputFormProps = {
   setLoading: (loading: boolean) => void;
 };
 
+const default_error = "Something went wrong."
+
 export default function RepoInputForm({
   onReviewReady,
   setLoading,
@@ -26,11 +28,8 @@ export default function RepoInputForm({
   const [criteria, setCriteria] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-
-
   async function handleSend() {
     const validationError = validateRepoUrlClient(repoUrl);
-
     if (validationError) {
       setError(validationError);
       return;
@@ -39,9 +38,17 @@ export default function RepoInputForm({
     try {
       setError(null);
       setLoading(true);
-
+      
       const review = await getReview(repoUrl, criteria);
       onReviewReady(review);
+    } catch (err: any) {
+      if (err.status === 413) {
+        setError(err.message || default_error);
+      } else if (err.status === 404) {
+        setError(err.message || default_error);
+      } else {
+        setError(err.message || default_error);
+      }
     } finally {
       setLoading(false);
     }

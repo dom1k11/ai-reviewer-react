@@ -15,8 +15,16 @@ export async function githubRequest<T = unknown>(
     });
 
     return res.data as T;
-  } catch (err) {
+  } catch (err: any) {
     console.error("❌ GitHub request failed:", err);
-    throw new Error("GitHub API request failed");
+
+    if (err.status) {
+      throw {
+        status: err.status,
+        message: err.message,
+      };
+    }
+
+    throw err;
   }
 }

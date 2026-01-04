@@ -90,6 +90,7 @@ export async function filterExts(owner: string, repo: string) {
       }));
   } catch (err) {
     console.error("❌ Failed to filter files from repo tree:", err);
-    throw new Error("Failed to filter allowed files");
+    throw err;
+
   }
 }

@@ -27,6 +27,11 @@ export async function reviewRepo({
     const files = await filterExts(owner, repo);
     if (!files.length) throw new Error("NO_FILES");
 
+    const MAX_FILES = 25;
+    if (files.length > MAX_FILES) {
+      throw new Error("REPOSITORY_TOO_LARGE");
+    }
+
     const codes = await Promise.all(
       files.map((f) => getFileContent(owner, repo, f.sha))
     );
@@ -39,8 +44,7 @@ export async function reviewRepo({
 
     return { review, score };
   } catch (err) {
-  console.error("💥 REVIEW REPO ERROR:", err);
-  throw new Error("Failed to process review");
-}
-
+    console.error("💥 REVIEW REPO ERROR:", err);
+    throw err;
+  }
 }
