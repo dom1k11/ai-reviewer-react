@@ -1,18 +1,32 @@
 import { githubRequest } from "@/clients/githubClient";
+
+type GitHubRepoResponse = {
+  default_branch: string;
+};
+
 export const GITHUB_ALLOWED_EXTS = process.env.GITHUB_ALLOWED_EXTS
   ? process.env.GITHUB_ALLOWED_EXTS.split(",")
   : [".ts", ".js"];
+
+async function getDefaultBranch(owner: string, repo: string): Promise<string> {
+  const repoInfo = await githubRequest<GitHubRepoResponse>(
+    "GET /repos/{owner}/{repo}",
+    { owner, repo }
+  );
+  return repoInfo.default_branch;
+}
+
 export async function getRepoTree(
   owner: string,
-  repo: string,
-  branch = "main"
+  repo: string
 ): Promise<{ tree: { path: string; type: string; sha: string }[] }> {
+  const defaultBranch = await getDefaultBranch(owner, repo);
   const request = await githubRequest(
     "GET /repos/{owner}/{repo}/git/trees/{tree_sha}",
     {
       owner,
       repo,
-      tree_sha: branch,
+      tree_sha: defaultBranch,
       recursive: "1",
     }
   );
