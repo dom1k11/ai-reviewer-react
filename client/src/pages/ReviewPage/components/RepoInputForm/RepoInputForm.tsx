@@ -14,7 +14,7 @@ type RepoInputFormProps = {
   setLoading: (loading: boolean) => void;
 };
 
-const default_error = "Something went wrong."
+const default_error = "Something went wrong.";
 
 export default function RepoInputForm({
   onReviewReady,
@@ -34,11 +34,9 @@ export default function RepoInputForm({
       setError(validationError);
       return;
     }
-
     try {
       setError(null);
       setLoading(true);
-      
       const review = await getReview(repoUrl, criteria);
       onReviewReady(review);
     } catch (err: any) {

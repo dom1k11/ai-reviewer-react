@@ -15,13 +15,18 @@ export async function githubRequest<T = unknown>(
     });
 
     return res.data as T;
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("❌ GitHub request failed:", err);
 
-    if (err.status) {
+    if (
+      typeof err === "object" &&
+      err !== null &&
+      "status" in err &&
+      "message" in err
+    ) {
       throw {
-        status: err.status,
-        message: err.message,
+        status: (err as { status: number }).status,
+        message: (err as { message: string }).message,
       };
     }
 
