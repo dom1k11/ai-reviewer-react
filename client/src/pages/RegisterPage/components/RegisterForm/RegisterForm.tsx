@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-
 type RegisterFormProps = {
   form: {
     name: string;
@@ -31,6 +30,7 @@ const RegisterForm = ({
         Name
         <input
           type="text"
+          className="form-control"
           value={form.name}
           onChange={(e) => onChange("name", e.target.value)}
         />
@@ -40,6 +40,7 @@ const RegisterForm = ({
       <label>
         Email
         <input
+          className="form-control"
           type="email"
           value={form.email}
           onChange={(e) => onChange("email", e.target.value)}
@@ -50,6 +51,7 @@ const RegisterForm = ({
       <label>
         Password
         <input
+          className="form-control"
           type="password"
           value={form.password}
           onChange={(e) => onChange("password", e.target.value)}
