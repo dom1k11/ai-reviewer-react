@@ -59,7 +59,7 @@ describe("reviewAndStoreRepo", () => {
     (githubService.filterExts as Mock).mockResolvedValue([]);
 
     await expect(reviewRepo(baseArgs)).rejects.toThrow(
-      "Failed to process review"
+       "NO_FILES"
     );
   });
 
@@ -73,7 +73,7 @@ describe("reviewAndStoreRepo", () => {
     );
 
     await expect(reviewRepo(baseArgs)).rejects.toThrow(
-      "Failed to process review"
+       "AI down"
     );
   });
 });

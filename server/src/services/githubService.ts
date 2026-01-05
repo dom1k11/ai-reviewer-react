@@ -8,7 +8,7 @@ export const GITHUB_ALLOWED_EXTS = process.env.GITHUB_ALLOWED_EXTS
   ? process.env.GITHUB_ALLOWED_EXTS.split(",")
   : [".ts", ".js"];
 
-async function getDefaultBranch(owner: string, repo: string): Promise<string> {
+export async function getDefaultBranch(owner: string, repo: string): Promise<string> {
   const repoInfo = await githubRequest<GitHubRepoResponse>(
     "GET /repos/{owner}/{repo}",
     { owner, repo }
