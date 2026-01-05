@@ -1,5 +1,10 @@
 import { describe, it, expect, vi, type Mock, beforeEach } from "vitest";
-import { getRepoTree, getFileContent, getDefaultBranch, filterExts } from "../githubService";
+import {
+  getRepoTree,
+  getFileContent,
+  getDefaultBranch,
+  filterExts,
+} from "../githubService";
 import { githubRequest } from "@/clients/githubClient";
 
 vi.mock("@/clients/githubClient", () => ({
@@ -96,13 +101,10 @@ describe("getDefaultBranch", () => {
 
     expect(result).toBe("main");
 
-    expect(githubRequest).toHaveBeenCalledWith(
-      "GET /repos/{owner}/{repo}",
-      {
-        owner: "dom1k11",
-        repo: "code-template",
-      }
-    );
+    expect(githubRequest).toHaveBeenCalledWith("GET /repos/{owner}/{repo}", {
+      owner: "dom1k11",
+      repo: "code-template",
+    });
   });
 
   it("should throw error if github request fails", async () => {
@@ -110,9 +112,9 @@ describe("getDefaultBranch", () => {
       new Error("Failed to fetch repo")
     );
 
-    await expect(
-      getDefaultBranch("dom1k11", "code-template")
-    ).rejects.toThrow("Failed to fetch repo");
+    await expect(getDefaultBranch("dom1k11", "code-template")).rejects.toThrow(
+      "Failed to fetch repo"
+    );
   });
 });
 
@@ -131,12 +133,12 @@ describe("filterExts", () => {
     });
     (githubRequest as Mock).mockResolvedValueOnce({
       tree: [
-        { path: "index.js", sha: "1", type: "blob" },             
-        { path: "app.ts", sha: "2", type: "blob" },               
-        { path: "readme.md", sha: "3", type: "blob" },             
-        { path: "node_modules/lib.js", sha: "4", type: "blob" },    
-        { path: ".env", sha: "5", type: "blob" },                 
-        { path: "src", sha: "6", type: "tree" },                   
+        { path: "index.js", sha: "1", type: "blob" },
+        { path: "app.ts", sha: "2", type: "blob" },
+        { path: "readme.md", sha: "3", type: "blob" },
+        { path: "node_modules/lib.js", sha: "4", type: "blob" },
+        { path: ".env", sha: "5", type: "blob" },
+        { path: "src", sha: "6", type: "tree" },
       ],
     });
 
@@ -157,8 +159,8 @@ describe("filterExts", () => {
       new Error("Repo tree failed")
     );
 
-    await expect(
-      filterExts("dom1k11", "code-template")
-    ).rejects.toThrow("Repo tree failed");
+    await expect(filterExts("dom1k11", "code-template")).rejects.toThrow(
+      "Repo tree failed"
+    );
   });
 });

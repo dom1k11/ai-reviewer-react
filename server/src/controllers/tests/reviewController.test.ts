@@ -53,6 +53,64 @@ describe("handleReviewCode", () => {
     expect(res.status).toHaveBeenCalledWith(201);
     expect(res.json).toHaveBeenCalledWith(mockResult);
   });
+  it("should return 404 if repository not found", async () => {
+    const req = {
+      body: { repoUrl: "https://github.com/test/repo" },
+      user: { id: 1 },
+    };
+    const res = makeRes();
+
+    vi.spyOn(userQuery, "getUserPreference").mockResolvedValue({});
+    vi.spyOn(reviewService, "reviewRepo").mockRejectedValue({ status: 404 });
+
+    await handleReviewCode(req as any, res as any);
+
+    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.json).toHaveBeenCalledWith({
+      message: "Repository not found or access denied",
+    });
+    expect(reviewQuery.insertReview).not.toHaveBeenCalled();
+  });
+
+  it("should return 413 if repository is too large", async () => {
+    const req = {
+      body: { repoUrl: "https://github.com/test/repo" },
+      user: { id: 1 },
+    };
+    const res = makeRes();
+
+    vi.spyOn(userQuery, "getUserPreference").mockResolvedValue({});
+    vi.spyOn(reviewService, "reviewRepo").mockRejectedValue({
+      message: "REPOSITORY_TOO_LARGE",
+    });
+
+    await handleReviewCode(req as any, res as any);
+
+    expect(res.status).toHaveBeenCalledWith(413);
+    expect(res.json).toHaveBeenCalledWith({
+      message: "Repository is too large for automatic review",
+    });
+  });
+
+  it("should return 404 if no supported files found", async () => {
+    const req = {
+      body: { repoUrl: "https://github.com/test/repo" },
+      user: { id: 1 },
+    };
+    const res = makeRes();
+
+    vi.spyOn(userQuery, "getUserPreference").mockResolvedValue({});
+    vi.spyOn(reviewService, "reviewRepo").mockRejectedValue({
+      message: "NO_FILES",
+    });
+
+    await handleReviewCode(req as any, res as any);
+
+    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.json).toHaveBeenCalledWith({
+      message: "No supported files found in repository",
+    });
+  });
 });
 
 describe("handleGetUserReviews", () => {
