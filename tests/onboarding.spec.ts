@@ -12,12 +12,11 @@ test("login + onboarding flow", async ({ page }) => {
   await expect(onboarding).toBeVisible();
 
   const next = page.getByRole("button", { name: "Next →" });
+  
 
   await next.click();
   await next.click();
   await next.click();
-  await next.click();
-
   const finish = page.getByRole("button", { name: "Got it!" });
   await expect(finish).toBeVisible();
 

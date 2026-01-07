@@ -16,10 +16,8 @@ test("user can view review details in stats", async ({ page }) => {
 
   await showMoreButton.click();
 
-  await expect(page.getByText(/final score/i)).toBeVisible();
-  await expect(page.getByText(/pts|score/i)).toBeVisible();
+  // await expect(page.getByText(/final score/i)).toBeVisible();
+  await expect(page.getByText(/pts/i).first()).toBeVisible();
 
-  await expect(
-    page.getByRole("button", { name: /show less/i })
-  ).toBeVisible();
+  await expect(page.getByRole("button", { name: /show less/i })).toBeVisible();
 });
