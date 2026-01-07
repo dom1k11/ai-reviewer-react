@@ -21,7 +21,7 @@ export default function ReviewSection({ result, loading }: ReviewSectionProps) {
 
   if (!result) {
     return (
-      <div className="review-section" id="review-section">
+      <div className="review-section">
         <h2>Review Result</h2>
         <p>No review yet.</p>
       </div>

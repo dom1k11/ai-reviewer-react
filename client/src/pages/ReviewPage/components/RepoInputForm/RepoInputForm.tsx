@@ -4,6 +4,7 @@ import ReqSelector from "../ReqSelector/ReqSelector";
 import { getReview } from "../../../../api/review";
 import { isLoggedIn } from "../../../../helpers/auth";
 import { validateRepoUrlClient } from "../../validator/repoUrl";
+
 type ReviewResult = {
   review: string;
   score: number;
@@ -11,17 +12,18 @@ type ReviewResult = {
 
 type RepoInputFormProps = {
   onReviewReady: (review: ReviewResult) => void;
+  clearReview: () => void;
+  loading: boolean;
   setLoading: (loading: boolean) => void;
-    clearReview: () => void;
 };
 
-const default_error = "Something went wrong.";
+const defaultError = "Something went wrong.";
 
 export default function RepoInputForm({
   onReviewReady,
-  setLoading,
   clearReview,
-
+  loading,
+  setLoading,
 }: RepoInputFormProps) {
   const loggedIn = isLoggedIn();
 
@@ -37,20 +39,16 @@ export default function RepoInputForm({
       setError(validationError);
       return;
     }
+
+    setError(null);
+    clearReview();
+    setLoading(true);
+
     try {
-      setError(null);
-      clearReview();
-      setLoading(true);
       const review = await getReview(repoUrl, criteria);
       onReviewReady(review);
     } catch (err: any) {
-      if (err.status === 413) {
-        setError(err.message || default_error);
-      } else if (err.status === 404) {
-        setError(err.message || default_error);
-      } else {
-        setError(err.message || default_error);
-      }
+      setError(err?.message || defaultError);
     } finally {
       setLoading(false);
     }
@@ -66,6 +64,7 @@ export default function RepoInputForm({
         className={`form-control ${error ? "is-invalid" : ""}`}
         type="text"
         value={repoUrl}
+        disabled={loading}
         onChange={(e) => {
           setRepoUrl(e.target.value);
           if (error) setError(null);
@@ -77,11 +76,16 @@ export default function RepoInputForm({
       <ReqSelector criteria={criteria} onChangeCriteria={setCriteria} />
 
       <button
+        type="button"
         className="btn btn-primary send-btn"
         onClick={handleSend}
-        disabled={!loggedIn}
+        disabled={!loggedIn || loading}
       >
-        {loggedIn ? "Get review" : "Login to get review"}
+        {loading
+          ? "Reviewing..."
+          : loggedIn
+          ? "Get review"
+          : "Login to get review"}
       </button>
     </div>
   );
