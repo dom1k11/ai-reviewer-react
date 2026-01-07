@@ -12,6 +12,7 @@ type ReviewResult = {
 type RepoInputFormProps = {
   onReviewReady: (review: ReviewResult) => void;
   setLoading: (loading: boolean) => void;
+    clearReview: () => void;
 };
 
 const default_error = "Something went wrong.";
@@ -19,6 +20,8 @@ const default_error = "Something went wrong.";
 export default function RepoInputForm({
   onReviewReady,
   setLoading,
+  clearReview,
+
 }: RepoInputFormProps) {
   const loggedIn = isLoggedIn();
 
@@ -36,6 +39,7 @@ export default function RepoInputForm({
     }
     try {
       setError(null);
+      clearReview();
       setLoading(true);
       const review = await getReview(repoUrl, criteria);
       onReviewReady(review);

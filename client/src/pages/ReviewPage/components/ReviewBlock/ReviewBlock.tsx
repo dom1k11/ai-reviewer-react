@@ -16,6 +16,8 @@ export default function ReviewBlock() {
       <RepoInputForm
         onReviewReady={setReviewResult}
         setLoading={setIsLoading}
+        clearReview={() => setReviewResult(null)}
+
       />
 
       <ReviewSection result={reviewResult} loading={isLoading} />

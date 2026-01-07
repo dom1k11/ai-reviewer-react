@@ -3,7 +3,6 @@ import { Router } from "express";
 import { validateBody } from "@/middleware/validate";
 import { PostURLSchema } from "@/validators/urlValidator";
 import {
-  // handleGetReviewById,
   handleGetUserReviews,
   handleReviewCode,
 } from "../controllers/reviewController";
