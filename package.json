@@ -5,7 +5,8 @@
   "scripts": {
     "start:client": "cd client && npm run build && npm run preview",
     "start:server": "cd server && npm run start",
-    "start": "concurrently \"npm run start:server\" \"npm run start:client\""
+    "start": "concurrently -k -n server,client -c red,blue \"npm run start:server\" \"npm run start:client\""
+
   },
   "keywords": [],
   "author": "",
