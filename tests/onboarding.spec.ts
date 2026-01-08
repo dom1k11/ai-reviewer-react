@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 test("login + onboarding flow", async ({ page }) => {
-  await page.goto("http://localhost:5173/login");
+  await page.goto("/login");
 
   await page.getByLabel(/email/i).fill("admin@gmail.com");
   await page.getByRole("textbox", { name: /password/i }).fill("123");

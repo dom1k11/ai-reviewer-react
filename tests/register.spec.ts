@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test('user can register successfully', async ({ page }) => {
   const email = `test_${Date.now()}@gmail.com`;
 
-  await page.goto('http://localhost:5173/login');
+  await page.goto('/login');
 
   await page.getByRole('button', { name: /sign up/i }).click();
 

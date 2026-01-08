@@ -6,7 +6,7 @@ test("shows validation error for invalid repo url", async ({ page }) => {
     localStorage.setItem("onboarded", "true");
   });
 
-  await page.goto("http://localhost:5173/app");
+  await page.goto("/app");
 
   await page
     .getByRole("textbox", { name: /repository/i })
