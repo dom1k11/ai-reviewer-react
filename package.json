@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "main": "eslint.config.js",
   "scripts": {
-    "dev": "vite",
-    "start:frontend": "vite preview --port 5173",
-    "start:backend": "node server.js",
-    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\""
+    "start:client": "cd client && npm run build && npm run preview",
+    "start:server": "cd server && npm run start",
+    "start": "concurrently \"npm run start:server\" \"npm run start:client\""
   },
   "keywords": [],
   "author": "",
