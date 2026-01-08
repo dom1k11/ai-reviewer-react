@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "main": "eslint.config.js",
   "scripts": {
-    "start:client": "cd client && npm run build && npm run preview",
+    "build:server": "cd server && npm run build",
     "start:server": "cd server && npm run start",
-    "start": "concurrently -k -n server,client -c red,blue \"npm run start:server\" \"npm run start:client\""
-
+    "build:client": "cd client && npm run build",
+    "start:client": "cd client && npm run preview",
+    "start": "npm run build:server && npm run build:client && concurrently -k \"npm run start:server\" \"npm run start:client\""
   },
   "keywords": [],
   "author": "",
