@@ -1,4 +1,4 @@
-export function validateForm(schema, data) {
+export function validateForm(schema: any, data: any) {
   const result = schema.safeParse(data);
 
   if (!result.success) {

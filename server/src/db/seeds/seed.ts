@@ -9,7 +9,12 @@ const pool = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
 });
 
-async function runSeeds() {
+export async function runSeeds() {
+  if (process.env.NODE_ENV === "test") {
+    console.log("⏭ Skipping seeds in test mode");
+    return;
+  }
+
   const seedsDir = path.resolve("src", "db", "seeds");
   const files = fs
     .readdirSync(seedsDir)
@@ -22,8 +27,16 @@ async function runSeeds() {
     try {
       await pool.query(sql);
     } catch (err) {
-      console.error(`❌ Failed on ${file}:`, err instanceof Error ? err.message : String(err));
-      process.exit(1);
+      console.error(
+        `❌ Failed on ${file}:`,
+        err instanceof Error ? err.message : String(err)
+      );
+
+      if (process.env.NODE_ENV !== "test") {
+        process.exit(1);
+      } else {
+        throw err;
+      }
     }
   }
 
@@ -31,4 +44,6 @@ async function runSeeds() {
   console.log("✅ Seeds completed.");
 }
 
-runSeeds();
+if (process.argv[1] && process.argv[1].includes("seed.ts")) {
+  runSeeds();
+}

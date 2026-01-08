@@ -1,30 +1,33 @@
 import { useEffect, useState } from "react";
 import Header from "../../components/Header/Header";
-import "./StatsPage.css";
-
+import { fetchReviews } from "../../api/review";
+import ReviewList from "./components/ReviewList/ReviewList";
+import { getUserId } from "../../helpers/auth";
+import Loader from "../../components/Loader/Loader";
+import "./StatsPage.css"
 export default function StatsPage() {
   const [loading, setLoading] = useState(true);
+  const [reviews, setReviews] = useState([]);
 
-  async function fetchReviews() {
+  async function load() {
     setLoading(true);
-    await new Promise((res) => setTimeout(res, 700));
+    const userId = getUserId();
+    const data = await fetchReviews(userId);
+    setReviews(data || []);
     setLoading(false);
   }
 
   useEffect(() => {
-    fetchReviews();
+    load();
   }, []);
 
   return (
     <>
       <Header />
 
-      <div className="stats-container">
-        <h2>Your Reviews</h2>
-
-        {loading && <div className="loader">Loading...</div>}
-
-        <p className="empty-msg">No reviews yet</p>
+      <div className={`stats-container ${loading ? "stats-loading" : ""}`}>
+        {loading && <Loader />}
+        {!loading && <ReviewList reviews={reviews} />}
       </div>
     </>
   );

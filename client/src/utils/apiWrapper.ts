@@ -16,11 +16,14 @@ export async function apiWrapper(path: string, options: RequestInit = {}) {
     window.location.href = "/login";
     return Promise.reject("Unauthorized");
   }
+  const data = await res.json().catch(() => ({}));
 
   if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.error || "Request failed");
+    throw {
+      status: res.status,
+      message: data.message,
+    };
   }
 
-  return res.json();
+  return data;
 }

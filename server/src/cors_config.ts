@@ -4,7 +4,7 @@ export const CORS_ORIGIN = process.env.CORS_ORIGIN
 
 export const CORS_METHODS = process.env.CORS_METHODS
   ? process.env.CORS_METHODS.split(",")
-  : ["GET", "POST"];
+  : ["GET", "POST", "OPTIONS"];
 
 export const CORS_HEADERS = process.env.CORS_HEADERS
   ? process.env.CORS_HEADERS.split(",")

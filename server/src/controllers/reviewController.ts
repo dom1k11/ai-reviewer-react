@@ -1,14 +1,51 @@
 import { reviewRepo } from "@/services/reviewService";
 import { controller } from "@/utils/controllerWrapper";
 import { getReviewsByUserId, insertReview } from "@/queries/review/review";
-import { getUserId } from "@/queries/user/getUserId";
+import { getUserId, getUserPreference } from "@/queries/user/getUserId";
+
 export const handleReviewCode = controller(async (req, res) => {
-  const { repoUrl } = req.body;
-  const result = await reviewRepo( repoUrl );
-  console.log(result)
-  insertReview(1, result.score, result.review) //TODO add user_id to req.body
-  res.status(201).json(result);
+  const { repoUrl, criteria = [] } = req.body;
+
+  try {
+    const prefs = await getUserPreference(req.user.id);
+
+    const result = await reviewRepo({
+      repoUrl,
+      criteria,
+      prefs,
+    });
+
+    await insertReview(Number(req.user.id), result.score, result.review);
+    res.status(201).json(result);
+
+  } catch (err: unknown) {
+    const apiError = err as { status?: number; message?: string };
+
+    if (apiError.status === 404) {
+      res.status(404).json({
+        message: "Repository not found or access denied",
+      });
+      return;
+    }
+
+    if (apiError.message === "REPOSITORY_TOO_LARGE") {
+      res.status(413).json({
+        message: "Repository is too large for automatic review",
+      });
+      return;
+    }
+
+    if (apiError.message === "NO_FILES") {
+      res.status(404).json({
+        message: "No supported files found in repository",
+      });
+      return;
+    }
+
+    throw err;
+  }
 }, "handleReviewCode");
+
 
 export const handleGetUserReviews = controller(async (req, res) => {
   const { user_id } = req.params;

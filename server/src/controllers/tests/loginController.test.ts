@@ -53,7 +53,7 @@ describe("handleLogin", () => {
     await handleLogin(req as any, res as any);
 
     expect(res.status).toHaveBeenCalledWith(401);
-    expect(res.json).toHaveBeenCalledWith({ error: "Invalid password" });
+    expect(res.json).toHaveBeenCalledWith({ error: "Invalid credentials" });
   });
 
   it("should return 403 if user is blocked", async () => {

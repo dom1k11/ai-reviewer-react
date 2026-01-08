@@ -1,26 +1,41 @@
 import { SYSTEM_PROMPT, USER_PROMPT, MODEL, MAX_TOKENS } from "@/config/openai";
 import { callOpenAI } from "@/clients/openaiClient";
-export function createReviewRequest(code: string) {
+export function createReviewRequest(
+  code: string,
+  criteria: string[],
+  prefs: UserPreferences
+) {
   return {
     model: MODEL,
     messages: [
-      { role: "system", content: SYSTEM_PROMPT },
-      { role: "user", content: USER_PROMPT(code) },
+      { role: "system", content: SYSTEM_PROMPT(criteria, prefs) },
+      { role: "user", content: USER_PROMPT(code, criteria) },
     ],
     max_tokens: MAX_TOKENS,
   };
 }
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function parseReviewResponse(data: any): string {
+type OpenAIChatResponse = {
+  choices?: Array<{
+    message?: {
+      content?: string | null;
+    };
+  }>;
+};
+export function parseReviewResponse(data: OpenAIChatResponse): string {
   return data.choices?.[0]?.message?.content ?? "No Answer from OpenAI";
 }
 import { mockReview } from "../utils/reviewMock";
-export async function generateReview(code: string) {
+import { UserPreferences } from "@/types/UserPreferences";
+export async function generateReview(
+  code: string,
+  criteria: string[],
+  prefs: UserPreferences
+) {
   if (process.env.USE_MOCK_AI === "true") {
     console.log("⚠️ Using mock AI");
     return mockReview;
   }
-  const request = createReviewRequest(code);
+  const request = createReviewRequest(code, criteria, prefs);
   const data = await callOpenAI(request);
   return parseReviewResponse(data);
 }

@@ -1,6 +1,24 @@
 import "./ReviewSection.css";
 import ReactMarkdown from "react-markdown";
-export default function ReviewSection({ result }) {
+import Loader from "../../../../components/Loader/Loader";
+
+type ReviewSectionProps = {
+  loading: boolean;
+  result: null | {
+    review: string;
+    score: number;
+  };
+};
+
+export default function ReviewSection({ result, loading }: ReviewSectionProps) {
+  if (loading) {
+    return (
+      <div className="review-section review-loading">
+        <Loader size="lg" color="primary" />
+      </div>
+    );
+  }
+
   if (!result) {
     return (
       <div className="review-section">

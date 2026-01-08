@@ -1,7 +1,25 @@
-import "./RegisterForm.css";
 import { useNavigate } from "react-router-dom";
+type RegisterFormProps = {
+  form: {
+    name: string;
+    email: string;
+    password: string;
+  };
+  onChange: (field: string, value: string) => void;
+  onSubmit: () => void;
+  errors?: {
+    name?: string;
+    email?: string;
+    password?: string;
+  };
+};
 
-export const RegisterForm = ({ name, email, password, errors, success, onChange, onSubmit }) => {
+const RegisterForm = ({
+  form,
+  onChange,
+  onSubmit,
+  errors,
+}: RegisterFormProps) => {
   const navigate = useNavigate();
 
   return (
@@ -11,9 +29,9 @@ export const RegisterForm = ({ name, email, password, errors, success, onChange,
       <label>
         Name
         <input
-          placeholder="John Doe"
           type="text"
-          value={name}
+          className="form-control"
+          value={form.name}
           onChange={(e) => onChange("name", e.target.value)}
         />
       </label>
@@ -22,9 +40,9 @@ export const RegisterForm = ({ name, email, password, errors, success, onChange,
       <label>
         Email
         <input
-          placeholder="email@example.com"
+          className="form-control"
           type="email"
-          value={email}
+          value={form.email}
           onChange={(e) => onChange("email", e.target.value)}
         />
       </label>
@@ -33,25 +51,20 @@ export const RegisterForm = ({ name, email, password, errors, success, onChange,
       <label>
         Password
         <input
-          placeholder="Minimum 3 characters"
+          className="form-control"
           type="password"
-          value={password}
+          value={form.password}
           onChange={(e) => onChange("password", e.target.value)}
         />
       </label>
       {errors?.password && <p className="error-text">{errors.password}</p>}
 
-      <button className="btn btn-primary" onClick={onSubmit}>
-        Sign up
+      <button className="btn btn-primary mt-3" onClick={onSubmit}>
+        Next Step
       </button>
-
-      <br />
-
-      <button className="btn btn-light" onClick={() => navigate("/login")}>
+      <button className="btn btn-light mt-2" onClick={() => navigate("/login")}>
         Back to login
       </button>
-
-      {success && <p className="success-text">{success}</p>}
     </div>
   );
 };
