@@ -6,4 +6,9 @@ export async function closeOnboardingIfVisible(page: Page) {
   if (await closeButton.isVisible().catch(() => false)) {
     await closeButton.click();
   }
+
+  await page
+    .locator(".introjs-overlay")
+    .waitFor({ state: "detached", timeout: 5000 })
+    .catch(() => {});
 }
