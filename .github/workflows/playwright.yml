@@ -17,6 +17,11 @@ jobs:
       run: npm ci
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
+    - name: Create env files
+      run: |
+        echo "PORT=3000" >> server/.env
+        echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> server/.env
+        echo "VITE_API_URL=http://localhost:3000" >> client/.env
     - name: Run Playwright tests
       run: npx playwright test
     - uses: actions/upload-artifact@v4
